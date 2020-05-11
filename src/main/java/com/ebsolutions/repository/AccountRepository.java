@@ -41,15 +41,13 @@ public class AccountRepository implements IAccountRepository {
             preparedStatement.setString(1, accountNumberParam);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.first();
-//            if (resultSet.first()) {
+            if (resultSet.first()) {
                 Account account = getAccount(resultSet);
                 databaseService.closeResultSet(resultSet);
                 return account;
-//            }
+            }
 
-//            return null;
-
-
+            return null;
         } finally {
             databaseService.close();
         }
@@ -60,6 +58,12 @@ public class AccountRepository implements IAccountRepository {
         return null;
     }
 
+
+    /**
+     * @param resultSet ResultSet with cursor on the desired row
+     * @return Account class with populated fields from database
+     * @throws Exception
+     */
     private Account getAccount(ResultSet resultSet) throws Exception {
         String accountNumber = resultSet.getString("accountNumber");
         String accountOwner = resultSet.getString("accountOwner");

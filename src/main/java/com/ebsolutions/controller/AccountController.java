@@ -20,12 +20,12 @@ public class AccountController {
     }
 
     @Get(produces = MediaType.APPLICATION_JSON, uri = "/{accountNumber}")
-    public HttpResponse<?> getAccount(@PathVariable String accountNumber) {
+    public HttpResponse<String> getAccount(@PathVariable String accountNumber) {
         try {
             AccountRepository accountRepository = new AccountRepository();
             Account account = accountRepository.getAccount(accountNumber);
             if (account == null) {
-            return HttpResponse.notFound();
+                return HttpResponse.notFound();
             }
                 return HttpResponse.ok(new Gson().toJson(account));
 
@@ -35,14 +35,14 @@ public class AccountController {
     }
 
     @Get(produces = MediaType.APPLICATION_JSON, uri = "/get-all")
-    public String getAll() {
+    public HttpResponse<String> getAll() {
         try {
             AccountRepository accountRepository = new AccountRepository();
             ArrayList<Account> accounts = accountRepository.getAccounts();
 
-            return new Gson().toJson(accounts);
+            return HttpResponse.ok(new Gson().toJson(accounts));
         } catch (Exception e) {
-            return "get-all threw an exception: " + e;
+            return HttpResponse.serverError("Something went wrong: " + e.getMessage());
         }
     }
 }

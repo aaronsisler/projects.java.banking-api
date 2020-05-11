@@ -3,10 +3,8 @@ package com.ebsolutions.service;
 import java.sql.*;
 
 public class DatabaseService {
-    private final PreparedStatement preparedStatement = null;
     private Connection connection = null;
     private Statement statement = null;
-    private PreparedStatement preppedStatement = null;
 
     public Statement getStatement() throws Exception {
         if (statement == null) {
@@ -29,21 +27,15 @@ public class DatabaseService {
         Class.forName("com.mysql.jdbc.Driver");
         // Setup the connection with the DB
         connection = DriverManager
-                .getConnection("jdbc:mysql://localhost:3306/Banking?"
-                        + "user=root&password=honda1834");
+                .getConnection("jdbc:mysql://localhost:3306/Banking?user=root&password=honda1834");
 
     }
 
     private void prepStatement() throws Exception {
-        try {
-            if (connection == null) {
-                this.prepConnection();
-            }
-            // Statements allow to issue SQL queries to the database
-            statement = connection.createStatement();
-        } catch (Exception e) {
-            throw e;
+        if (connection == null) {
+            this.prepConnection();
         }
+        statement = connection.createStatement();
     }
 
     public void closeResultSet(ResultSet resultSet) {
