@@ -62,7 +62,7 @@ public class AccountRepository implements IAccountRepository {
     /**
      * @param resultSet ResultSet with cursor on the desired row
      * @return Account class with populated fields from database
-     * @throws Exception
+     * @throws Exception Throws SQL Exception
      */
     private Account getAccount(ResultSet resultSet) throws Exception {
         String accountNumber = resultSet.getString("accountNumber");

@@ -13,12 +13,6 @@ import java.util.ArrayList;
 
 @Controller("/account")
 public class AccountController {
-
-    @Get(produces = MediaType.TEXT_PLAIN)
-    public String index() {
-        return "Hello World";
-    }
-
     @Get(produces = MediaType.APPLICATION_JSON, uri = "/{accountNumber}")
     public HttpResponse<String> getAccount(@PathVariable String accountNumber) {
         try {
