@@ -17,7 +17,7 @@ public class AccountRepository implements IAccountRepository {
             Statement statement = databaseService.getStatement();
 
             ResultSet resultSet = statement
-                    .executeQuery("select * from Banking.account;");
+                    .executeQuery("SELECT * FROM Banking.account;");
 
             while (resultSet.next()) {
                 Account account = getAccount(resultSet);
@@ -29,7 +29,6 @@ public class AccountRepository implements IAccountRepository {
         } finally {
             databaseService.close();
         }
-
     }
 
     @Override
