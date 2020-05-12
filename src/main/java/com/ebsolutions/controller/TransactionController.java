@@ -1,41 +1,25 @@
 package com.ebsolutions.controller;
 
 import com.ebsolutions.model.Account;
+import com.ebsolutions.model.TransactionRequest;
 import com.ebsolutions.repository.AccountRepository;
-import com.google.gson.Gson;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
-
-import java.util.ArrayList;
 
 @Controller("/transaction")
 public class TransactionController {
-    @Post(produces = MediaType.APPLICATION_JSON, uri = "/{accountNumber}")
-    public HttpResponse<String> createTransaction(@PathVariable String accountNumber) {
+    @Post(consumes = MediaType.APPLICATION_JSON)
+    public HttpResponse<String> createTransaction(@Body TransactionRequest transactionRequest) {
         try {
+            System.out.println(transactionRequest.getTransactionType());
             AccountRepository accountRepository = new AccountRepository();
-            Account account = accountRepository.getAccount(accountNumber);
-            if (account == null) {
-                return HttpResponse.notFound();
-            }
-                return HttpResponse.ok(new Gson().toJson(account));
+            Account account = accountRepository.getAccount(transactionRequest.getAccount().getAccountNumber());
+            System.out.println(account.getAccountNumber());
+            return HttpResponse.ok("All good");
 
-        } catch (Exception e) {
-            return HttpResponse.serverError("Something went wrong: " + e.getMessage());
-        }
-    }
-
-    @Get(produces = MediaType.APPLICATION_JSON, uri = "/get-all")
-    public HttpResponse<String> getAll() {
-        try {
-            AccountRepository accountRepository = new AccountRepository();
-            ArrayList<Account> accounts = accountRepository.getAccounts();
-
-            return HttpResponse.ok(new Gson().toJson(accounts));
         } catch (Exception e) {
             return HttpResponse.serverError("Something went wrong: " + e.getMessage());
         }

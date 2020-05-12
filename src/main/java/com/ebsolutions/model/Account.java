@@ -1,5 +1,8 @@
 package com.ebsolutions.model;
 
+import io.micronaut.core.annotation.Introspected;
+
+@Introspected
 public class Account {
     private int accountId;
     private final String accountNumber;
