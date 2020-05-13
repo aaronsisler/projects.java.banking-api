@@ -23,8 +23,6 @@ public class DatabaseService {
     }
 
     private void prepConnection() throws Exception {
-        // This will load the MySQL driver, each DB has its own driver
-        Class.forName("com.mysql.jdbc.Driver");
         // Setup the connection with the DB
         connection = DriverManager
                 .getConnection("jdbc:mysql://localhost:3306/Banking?user=root&password=honda1834");
