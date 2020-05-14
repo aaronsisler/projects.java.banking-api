@@ -1,16 +1,20 @@
 package com.ebsolutions.controller;
 
+import com.ebsolutions.repository.AccountRepository;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.test.annotation.MicronautTest;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import javax.inject.Inject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 @MicronautTest
 @DisplayName("Account Controller")
@@ -20,8 +24,17 @@ public class AccountControllerTest {
     @Client("/")
     RxHttpClient client;
 
-//    @Mock
-//    AccountRepository accountRepository;
+    private AccountController accountController;
+
+    @Mock AccountRepository accountRepository;
+
+    @BeforeEach
+    public void setup() {
+        accountController = new AccountController(accountRepository);
+
+        accountRepository = mock(AccountRepository.class);
+//        accountController.setAccountRepository(accountRepository);
+    }
 
     @Test
     @DisplayName("should return the correct account")
